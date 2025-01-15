@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import Carousel, {
@@ -29,6 +30,7 @@ export const MenuScreen = () => {
   const scrollOffsetValue = useSharedValue<number>(0);
   const progress = useSharedValue<number>(0);
   const ref = useRef<ICarouselInstance>(null);
+  const {width} = useWindowDimensions();
 
   const onPressPagination = (index: number) => {
     ref.current?.scrollTo({
@@ -42,7 +44,7 @@ export const MenuScreen = () => {
       <TabsHeader label="Menu" left />
       <View style={styles.carouselContainer}>
         <Carousel
-          width={352}
+          width={width - 20}
           height={152}
           ref={ref}
           data={DATA}

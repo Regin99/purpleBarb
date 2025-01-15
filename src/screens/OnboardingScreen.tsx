@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 
@@ -48,6 +49,7 @@ export const OnboardingScreen = () => {
   const progress = useSharedValue<number>(0);
   const navigation = useNavigation();
   const carouselRef = useRef<ICarouselInstance>(null);
+  const {width} = useWindowDimensions();
 
   const handleSkip = () => {
     if (progress.value < ONBOARDING_DATA.length - 1) {
@@ -67,25 +69,27 @@ export const OnboardingScreen = () => {
             </TouchableOpacity>
           }
         />
-        <Carousel
-          ref={carouselRef}
-          width={375}
-          data={ONBOARDING_DATA}
-          loop={false}
-          onProgressChange={progress}
-          containerStyle={styles.carouselContainer}
-          renderItem={({item}) => (
-            <View style={styles.carouselItemContainer}>
-              <Image source={item.image} style={styles.carouselImage} />
-              <View style={styles.carouselTextContainer}>
-                <Text style={styles.carouselTitle}>{item.title}</Text>
-                <Text style={styles.carouselDescription}>
-                  {item.description}
-                </Text>
+        <View style={styles.carouselContainer}>
+          <Carousel
+            ref={carouselRef}
+            width={width}
+            data={ONBOARDING_DATA}
+            loop={false}
+            onProgressChange={progress}
+            containerStyle={styles.carouselContainer}
+            renderItem={({item}) => (
+              <View style={styles.carouselItemContainer}>
+                <Image source={item.image} style={styles.carouselImage} />
+                <View style={styles.carouselTextContainer}>
+                  <Text style={styles.carouselTitle}>{item.title}</Text>
+                  <Text style={styles.carouselDescription}>
+                    {item.description}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
-        />
+            )}
+          />
+        </View>
         <Pagination.Basic
           progress={progress}
           data={ONBOARDING_DATA}
@@ -101,10 +105,12 @@ export const OnboardingScreen = () => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+    paddingHorizontal: 16,
   },
   safeArea: {
     flex: 1,
   },
+
   backButton: {
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
@@ -119,7 +125,7 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     flex: 1,
-    justifyContent: 'center',
+    alignItems: 'center',
   },
   carouselItemContainer: {
     paddingHorizontal: 22,
