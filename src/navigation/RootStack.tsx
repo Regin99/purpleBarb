@@ -7,11 +7,13 @@ import {MainNavigator} from './MainNavigator';
 import {useGetPolicyQuery} from '../store/rtk/barbApi';
 import {AltScreen, SplashScreen} from '../screens';
 import {
+  isOnboardingFinished,
   saveData,
   selectAppPrivacyData,
   selectIsPolicyLoaded,
 } from '../store/slices';
 import {useEffect} from 'react';
+import {OnboardingNavigator} from './OnboardingNavigator';
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,6 +25,8 @@ export const RootNavigator = () => {
   const {data, isLoading} = useGetPolicyQuery(undefined, {
     skip: isPolicyLoaded || !!appPrivacyData.policy,
   });
+
+  const isFinished = useSelector(isOnboardingFinished);
 
   useEffect(() => {
     if (data && data.policy && !appPrivacyData.policy) {
@@ -37,7 +41,11 @@ export const RootNavigator = () => {
   return (
     <NavigationContainer>
       {appPrivacyData?.policy?.includes('privacypolicies') ? (
-        <MainNavigator />
+        isFinished ? (
+          <MainNavigator />
+        ) : (
+          <OnboardingNavigator />
+        )
       ) : (
         <AltScreen />
       )}

@@ -1,7 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
 import WebView from 'react-native-webview';
-import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {COLORS} from '../constants/colors';
@@ -13,7 +12,6 @@ import {setIsOnboardingFinished} from '../store/slices';
 export const PrivacyScreen = () => {
   const [accepted, setAccepted] = useState(false);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.headerText}>
@@ -43,7 +41,6 @@ export const PrivacyScreen = () => {
       <TouchableOpacity
         onPress={() => {
           dispatch(setIsOnboardingFinished(true));
-          navigation.navigate('Tabs');
         }}
         style={[styles.submitButton, !accepted && styles.disabled]}>
         <Text style={styles.submitText}>Next</Text>

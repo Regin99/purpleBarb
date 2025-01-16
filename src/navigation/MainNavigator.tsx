@@ -1,5 +1,4 @@
 import {useSelector} from 'react-redux';
-import {OnboardingScreen, PrivacyScreen} from '../screens';
 import {
   BarbershopScreen,
   BookAddressScreen,
@@ -17,9 +16,6 @@ export const MainNavigator = () => {
     <RootStack.Navigator
       screenOptions={{headerShown: false}}
       initialRouteName={isFinished ? 'Tabs' : 'Onboarding'}>
-      <RootStack.Screen name="Onboarding" component={OnboardingScreen} />
-      <RootStack.Screen name="Privacy" component={PrivacyScreen} />
-
       <RootStack.Screen name="Tabs" component={TabNavigator} />
       <RootStack.Screen name="Barbershop" component={BarbershopScreen} />
       <RootStack.Screen name="BookAddress" component={BookAddressScreen} />
